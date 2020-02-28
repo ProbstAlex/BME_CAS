@@ -16,8 +16,8 @@ def region_grow(image, seed_point):
     print('segmenting at ({0}, {1}, {2}) is {3}'.format(x, y, z, threshold))
 
     ## TODO: choose a lower and upper threshold
-    threshold_lower = threshold #change
-    threshold_upper = threshold
+    threshold_lower = threshold - 100
+    threshold_upper = threshold + 100
     _segmentation_mask = (np.greater(image, threshold_lower)
                           & np.less(image, threshold_upper)).astype(np.bool)
     structure = np.ones((2, 2, 2))
@@ -43,10 +43,13 @@ def region_grow(image, seed_point):
                         ## voxel (new_check_point) belongs to the region or not
                         if not (iz == 0 and ix == 0 and iy == 0):
                             new_check_point = check_point + np.asarray([iz, iy, ix], dtype=np.uint32)
-
+                            if (image[new_check_point[0], new_check_point[1], new_check_point[2]]<threshold_upper and 
+                            image[new_check_point[0], new_check_point[1], new_check_point[2]]>threshold_lower):
+                                segmentation_mask[new_check_point[0], new_check_point[1], new_check_point[2]]=1
+                                to_check.put(new_check_point)    
                         ## TODO: implement a stop criteria such that the algorithm
                         ## doesn't check voxels which are too far away
-
+                        
     # Your code goes here
     structure = np.ones((2, 2, 2))
     segmentation_mask = ndimage.binary_closing(segmentation_mask, structure=structure).astype(np.bool)
