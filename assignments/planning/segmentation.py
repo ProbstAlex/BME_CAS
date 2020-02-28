@@ -11,12 +11,12 @@ def region_grow(image, seed_point):
     :return: A 3D binary segmentation mask with the same dimensions as image
     """
     segmentation_mask = np.zeros(image.shape, np.bool)
-    z, y, x = seed_point
+    z, y, x = seed_point 
     threshold = image[z, y, x]
     print('segmenting at ({0}, {1}, {2}) is {3}'.format(x, y, z, threshold))
 
     ## TODO: choose a lower and upper threshold
-    threshold_lower = threshold
+    threshold_lower = threshold #change
     threshold_upper = threshold
     _segmentation_mask = (np.greater(image, threshold_lower)
                           & np.less(image, threshold_upper)).astype(np.bool)
