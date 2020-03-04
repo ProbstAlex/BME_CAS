@@ -34,6 +34,7 @@ def region_grow(image, seed_point):
             _segmentation_mask[check_point[0], check_point[1], check_point[2]] = False
             segmentation_mask[check_point[0], check_point[1], check_point[2]] = 1
 
+            
             # These for loops will visit all the neighbors of a voxel and see if
             # they belong to the region
             for ix in range(-1, 2, 2):
@@ -46,10 +47,18 @@ def region_grow(image, seed_point):
                             if (image[new_check_point[0], new_check_point[1], new_check_point[2]]<threshold_upper and 
                             image[new_check_point[0], new_check_point[1], new_check_point[2]]>threshold_lower):
                                 segmentation_mask[new_check_point[0], new_check_point[1], new_check_point[2]]=1
-                                to_check.put(new_check_point)    
                         ## TODO: implement a stop criteria such that the algorithm
                         ## doesn't check voxels which are too far away
-                        
+                                if ( 
+                                    new_check_point[0] + 1 < image.shape[0] and
+                                    new_check_point[1] + 1 < image.shape[1] and
+                                    new_check_point[2] + 1 < image.shape[2] and
+                                    new_check_point[0] - 1 > 0 and
+                                    new_check_point[1] - 1 > 0 and
+                                    new_check_point[2] - 1 > 0
+                                ):
+                                    to_check.put(new_check_point)
+
     # Your code goes here
     structure = np.ones((2, 2, 2))
     segmentation_mask = ndimage.binary_closing(segmentation_mask, structure=structure).astype(np.bool)
