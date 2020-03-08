@@ -16,14 +16,15 @@ def region_grow(image, seed_point):
     print('segmenting at ({0}, {1}, {2}) is {3}'.format(x, y, z, threshold))
 
     ## TODO: choose a lower and upper threshold
-    threshold_lower = threshold - 100
-    threshold_upper = threshold + 100
+    threshold_lower = threshold - 200
+    threshold_upper = threshold + 200
     _segmentation_mask = (np.greater(image, threshold_lower)
                           & np.less(image, threshold_upper)).astype(np.bool)
     structure = np.ones((2, 2, 2))
 
     ## TODO: post-process the image with a morphological filter
-
+    segmentation_mask = ndimage.binary_opening(segmentation_mask, structure=structure).astype(np.bool)
+    
     to_check = queue.Queue()
     check_point = np.asarray([z, y, x], dtype=np.uint32)
     to_check.put(check_point)

@@ -248,7 +248,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cpu" if torch.cuda.is_available() else "cpu")
     print(device)
 
     liver_segmenter = LiverSegmenter(device, 'cas/planning/dl/weights/liver_weights.pth', args.show_plots)
@@ -258,4 +258,4 @@ if __name__ == "__main__":
     predictions, tk_dice, tu_dice = segment_case(case_loader, args.case_id)
 
     filename = 'predictions_{0}.nii'.format(args.case_id)
-    nib.save(predictions, os.path.join(agrs.dataset_path, filename))
+    nib.save(predictions, os.path.join(args.dataset_path, filename))
