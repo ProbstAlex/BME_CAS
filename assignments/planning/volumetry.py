@@ -5,8 +5,12 @@ import numpy as np
 import os
 from scipy import ndimage
 import sys
+import matplotlib.pyplot as plt
 
-
+# Note to Iwan:
+# I used the old version of segment_liver.py and volumetry.py, and fixed the bugs until
+# I got a reasonable result. I am new to github, and did not know that fixed bugs 
+# are available there. ..
 LABELS = {
     "Liver": 1,
     "Tumor": 2
@@ -24,7 +28,8 @@ def calc_volume(image, label, spacing):
     #TODO: implement code to calculate the volume in mL    
     count = np.count_nonzero(input_image == label)
     volume = abs(count*spacing[0]*spacing[1]*spacing[2])/1000
-    
+
+
     return volume
 
 if __name__ == "__main__":
@@ -35,7 +40,7 @@ if __name__ == "__main__":
     print(args)
 
     # CORRECTION..
-    # have to call format argumnt with args.case_id, not with only case_id
+    # have to call format argument with args.case_id, not with only case_id
     filename = 'predictions_{0}.nii'.format(args.case_id)
     input_image = os.path.join(args.dataset_path, filename)
 

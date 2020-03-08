@@ -1,6 +1,7 @@
 # data
-segmentation.npy
-*.nii
+# segmentation.npy
+#*.nii
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

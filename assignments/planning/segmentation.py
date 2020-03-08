@@ -23,7 +23,8 @@ def region_grow(image, seed_point):
     structure = np.ones((2, 2, 2))
 
     ## TODO: post-process the image with a morphological filter
-    segmentation_mask = ndimage.binary_opening(segmentation_mask, structure=structure).astype(np.bool)
+    _segmentation_mask = ndimage.binary_opening(_segmentation_mask, structure=structure).astype(np.bool)
+    _segmentation_mask = ndimage.binary_closing(_segmentation_mask, structure=structure).astype(np.bool)
     
     to_check = queue.Queue()
     check_point = np.asarray([z, y, x], dtype=np.uint32)
