@@ -35,7 +35,7 @@ if __name__ == "__main__":
     print(args)
 
     # CORRECTION..
-    # have to call format argumnt with args.case_id, not with only case.id
+    # have to call format argumnt with args.case_id, not with only case_id
     filename = 'predictions_{0}.nii'.format(args.case_id)
     input_image = os.path.join(args.dataset_path, filename)
 
