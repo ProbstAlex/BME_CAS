@@ -34,7 +34,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print(args)
 
-    # CORRECTION
+    # CORRECTION..
     # have to call format argumnt with args.case_id, not with only case.id
     filename = 'predictions_{0}.nii'.format(args.case_id)
     input_image = os.path.join(args.dataset_path, filename)
